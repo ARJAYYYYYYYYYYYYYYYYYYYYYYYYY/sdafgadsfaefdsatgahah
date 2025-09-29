@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAHAHAHAHAHAH</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Dancing Script', 'Times New Roman', serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #FFFDF9 0%, #FBC4AB 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Music Controls at Top */
+        .top-music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 253, 249, 0.95);
+            padding: 15px;
+            border-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .music-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #A267AC, #FBC4AB);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .music-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(162, 103, 172, 0.4);
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+            background: #ddd;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #A267AC;
+            cursor: pointer;
+        }
+
+        .volume-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #A267AC;
+            cursor: pointer;
+            border: none;
+        }
+
+        .volume-label {
+            font-size: 16px;
+            color: #A267AC;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #FFFDF9;
+            padding: 60px 80px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #A267AC, #FBC4AB);
+        }
+
+        .letterhead {
+            text-align: right;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #FBC4AB;
+        }
+
+        .sender-info {
+            color: #3E3E3E;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .sender-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #A267AC;
+            margin-bottom: 5px;
+        }
+
+        .date {
+            text-align: right;
+            margin: 30px 0;
+            color: #3E3E3E;
+            font-size: 16px;
+        }
+
+        .recipient {
+            margin-bottom: 30px;
+        }
+
+        .recipient-name {
+            font-weight: bold;
+            color: #A267AC;
+            margin-bottom: 5px;
+        }
+
+        .recipient-address {
+            color: #3E3E3E;
+            line-height: 1.4;
+        }
+
+        .subject {
+            margin: 30px 0;
+            font-weight: bold;
+            color: #A267AC;
+            text-decoration: underline;
+        }
+
+        .salutation {
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #3E3E3E;
+        }
+
+        .letter-body {
+            margin-bottom: 30px;
+        }
+
+        .paragraph {
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #3E3E3E;
+        }
+
+        .closing {
+            margin-top: 40px;
+        }
+
+        .closing-phrase {
+            margin-bottom: 60px;
+            color: #3E3E3E;
+        }
+
+        .signature-area {
+            border-bottom: 1px solid #A267AC;
+            width: 200px;
+            margin-bottom: 5px;
+        }
+
+        .signature-name {
+            font-weight: bold;
+            color: #A267AC;
+        }
+
+        .photo-gallery {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+
+        .gallery-title {
+            font-weight: bold;
+            color: #A267AC;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .custom-size {
+            height: 250px; 
+            width: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .top-music-controls {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                padding: 10px;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .volume-slider {
+                width: 60px;
+            }
+            
+            .edit-mode {
+                display: none;
+            }
+            
+            .container::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-music-controls">
+        <button class="music-btn" id="musicToggle">🎵 Play Music</button>
+        <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="30" title="Volume Control" aria-label="Volume Control">
+        <span class="volume-label">🔊</span>
+    </div>
+
+    <div class="container">
+        <div class="letterhead">
+            <div class="sender-name">Jacob</div>
+        </div>
+
+        <div class="salutation"></div>
+
+        <div class="letter-body">
+            <div class="paragraph">
+
+            <div class="paragraph">
+
+            <div class="paragraph">
+
+            <div class="paragraph">
+            </div>
+   
+            <div class="paragraph">
+
+            </div>
+        </div>
+
+        <div class="photo-gallery">
+            <div class="gallery-title"></div>
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="images/1.jpg" alt="Achievement 1">
+                </div>
+                <div class="photo-item">
+                    <img src="images/2.jpg" alt="Achievement 2">
+                </div>
+                <div class="photo-item">
+                    <img src="images/3.jpg" alt="Achievement 3" class="custom-size">
+                </div>
+                 <div class="photo-item">
+                    <img src="images/ggs.jpg" alt="Achievement 4">
+                </div>
+            </div>
+        </div>
+
+        <div class="closing">
+            <div class="closing-phrase">\
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Background Music (fallback) -->
+    <audio id="backgroundMusic" loop autoplay style="display: none;">
+        <source src="music/SpotiDownloader.com - Take A Chance With Me - NIKI.mp3" type="audio/mpeg">
+        <source src="music/background.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const musicToggle = document.getElementById('musicToggle');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const volumeSlider = document.getElementById('volumeSlider');
+        
+        let isPlaying = false;
+        
+        // Set initial volume
+        backgroundMusic.volume = 0.3;
+        
+        // Auto-play attempt when page loads
+        window.addEventListener('load', function() {
+            backgroundMusic.play().then(function() {
+                // Auto-play successful
+                isPlaying = true;
+                musicToggle.innerHTML = '⏸️ Pause Music';
+                musicToggle.style.background = 'linear-gradient(45deg, #FBC4AB, #A267AC)';
+            }).catch(function(error) {
+                // Auto-play prevented by browser
+                console.log('Auto-play prevented:', error);
+                isPlaying = false;
+                musicToggle.innerHTML = '🎵 Click to Play Music';
+            });
+        });
+
+        // Try to play music on any user interaction if auto-play failed
+        document.body.addEventListener('click', function tryPlay() {
+            if (!isPlaying) {
+                backgroundMusic.play().then(function() {
+                    isPlaying = true;
+                    musicToggle.innerHTML = '⏸️ Pause Music';
+                    musicToggle.style.background = 'linear-gradient(45deg, #FBC4AB, #A267AC)';
+                    // Remove this listener after successful play
+                    document.body.removeEventListener('click', tryPlay);
+                }).catch(function(error) {
+                    console.log('Play failed:', error);
+                });
+            }
+        });
+        
+        // Toggle music play/pause
+        musicToggle.addEventListener('click', function() {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                this.innerHTML = '🎵 Play Music';
+                this.style.background = 'linear-gradient(45deg, #A267AC, #FBC4AB)';
+            } else {
+                backgroundMusic.play().catch(function(error) {
+                    console.log('Auto-play prevented:', error);
+                    alert('Please click to start the music');
+                });
+                this.innerHTML = '⏸️ Pause Music';
+                this.style.background = 'linear-gradient(45deg, #FBC4AB, #A267AC)';
+            }
+            isPlaying = !isPlaying;
+        });
+        
+        // Volume control
+        volumeSlider.addEventListener('input', function() {
+            backgroundMusic.volume = this.value / 100;
+        });
+        
+        // Handle music end (though it's looped)
+        backgroundMusic.addEventListener('ended', function() {
+            isPlaying = false;
+            musicToggle.innerHTML = '🎵 Play Music';
+            musicToggle.style.background = 'linear-gradient(45deg, #A267AC, #FBC4AB)';
+        });
+    </script>
+</body>
+</html>
